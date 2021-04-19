@@ -43,10 +43,17 @@ while(True):
     else:
         minute = f"{now.minute}"
 
-    if (now.hour < 10):
-        hour = f"0{now.hour}"
+    if (now.hour >= 0 and now.hour <= 2):
+        if (now.hour == 2):
+            hour = 23
+        elif now.hour == 1:
+            hour = 22
+        elif now.hour == 0:
+            hour = 21
+    elif (now.hour >= 3 and now.hour <= 12):
+        hour = f"0{now.hour - 3}"
     else:
-        hour = f"{now.hour}"
+        hour = f"{now.hour - 3}"
 
     horario = f"{hour}:{minute}"
 
@@ -62,12 +69,18 @@ while(True):
         string1 = "To the moon! 🚀 - DogeCoin agora vale R$"
         valor_em_reais = r['market_data']['current_price']['brl']
 
+    valor_a_postar = ''
+
     if oldvalue == valor_em_reais:
+        valor_a_postar = str(valor_em_reais).replace(".", ",")
+
         print(
-            "Valor igual o anterior. Não é necessário postar nada. Valor:", valor_em_reais)
+            "Valor igual o anterior. Não é necessário postar nada. Valor:", valor_a_postar)
     else:
+        valor_a_postar = str(valor_em_reais).replace(".", ",")
+
         api.update_status(
-            f"{string1} {valor_em_reais} as {horario}")
+            f"{string1} {valor_a_postar} as {horario}")
         print("Tweet criado! Daqui a 15 minutos nova atualização")
 
     r = requests.get("https://api.coingecko.com/api/v3/coins/dogecoin")

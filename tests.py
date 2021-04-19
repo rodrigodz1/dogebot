@@ -3,10 +3,8 @@ import time
 
 now = datetime.datetime.now()
 minute = ''
+preco = '20.20'
 
 while(True):
-    print(minute)
-    if (now.minute < 10):
-        minute = f"0{now.minute}"
-    print(minute)
+    print(preco.replace(".", ","))
     time.sleep(5)
